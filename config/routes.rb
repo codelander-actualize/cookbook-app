@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
-  # STEP 1: A ROUTE triggers a controller action
-  # verb "/urls" => "namespace/controllers#action"
+  namespace :api do #creates api namespaced route (appens /api to route)
+  	get "/one_recipe_url" => "recipes#one_recipe_method"
+  end
 end
