@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  namespace :api do #creates api namespaced route (appens /api to route)
-  	get "/one_recipe_url" => "recipes#one_recipe_method"
+  namespace :api do #creates api namespaced route (appends /api to route)
+  	get "/recipes" => "recipes#index"
+  	get "/recipes/:id" => "recipes#show"
   end
 end
