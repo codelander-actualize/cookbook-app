@@ -6,7 +6,6 @@ class Api::RecipesController < ApplicationController
 	end
 
 	def show
-		# @recipe = Recipe.find(params["id"])
 		@recipe = Recipe.find_by(id: params["id"]) #single recipe hash from the db
 		render 'show.json.jbuilder'
 	end
@@ -19,6 +18,20 @@ class Api::RecipesController < ApplicationController
 			directions: params["directions"],
 			prep_time: params["prep_time"]
 		)
+		@recipe.save
+		render 'show.json.jbuilder'
+	end
+
+	def update
+		# .find always takes in JUST an id
+		@recipe = Recipe.find(params[:id])
+
+		@recipe.title = params["title"] || @recipe.title
+		@recipe.chef = params["chef"] || @recipe.chef
+		@recipe.ingredients = params["ingredients"] || @recipe.ingredients
+		@recipe.directions = params["directions"] || @recipe.directions
+		@recipe.prep_time = params["prep_time"] || @recipe.prep_time
+
 		@recipe.save
 		render 'show.json.jbuilder'
 	end
