@@ -31,4 +31,18 @@ class RecipesController < ApplicationController
 		@recipe = Recipe.find(params[:id])
 	end
 
+	def update
+		@recipe = Recipe.find(params[:id])
+
+		@recipe.title = params[:title]
+		@recipe.ingredients = params[:ingredients]
+		@recipe.directions = params[:directions]
+		@recipe.prep_time = params[:prep_time]
+		@recipe.image_url = params[:image_url]
+		@recipe.user_id = params[:user_id]
+
+		@recipe.save
+		redirect_to "/recipes/#{@recipe.id}"
+	end
+
 end

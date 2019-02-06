@@ -1,6 +1,7 @@
 <h1>Edit Recipe</h1>
 
-<form action="/recipes/<%= @recipe.id %>" method="patch">
+<form action="/recipes/<%= @recipe.id %>" method="post">
+	<input type="hidden" name="_method" value="patch">
 	<div>
 		Title: <input type="text" name="title" value="<%= @recipe.title %>">
 	</div>
@@ -20,7 +21,11 @@
 		Choose a user:
 		<select name="user_id">
 			<% @users.each do |user| %>
-				<option value="<%= user.id %>"><%= user.name %></option>
+				<% if @recipe.user == user %>
+					<option selected value="<%= user.id %>"><%= user.name %></option>
+				<% else %>
+					<option value="<%= user.id %>"><%= user.name %></option>
+				<% end %>
 			<% end %>
 		</select>
 	</div>
