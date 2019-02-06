@@ -5,6 +5,7 @@ class RecipesController < ApplicationController
 	end
 
 	def new
+		@users = User.all
 		#IMPLICIT RENDERING OF HTML ONLY
 	end
 
@@ -19,10 +20,15 @@ class RecipesController < ApplicationController
 			directions: params[:directions],
 			prep_time: params[:prep_time],
 			image_url: params[:image_url],
-			user_id: 1
+			user_id: params[:user_id]
 		)
 		@recipe.save
-		redirect_to "/recipes"
+		redirect_to "/recipes/#{@recipe.id}"
+	end
+
+	def edit
+		@users = User.all
+		@recipe = Recipe.find(params[:id])
 	end
 
 end
