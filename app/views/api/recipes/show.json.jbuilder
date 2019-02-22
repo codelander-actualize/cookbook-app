@@ -1,11 +1,4 @@
-json.id @recipe.id
-json.title @recipe.title
-json.ingredients @recipe.ingredients
-json.directions @recipe.directions
-json.prep_time @recipe.prep_time
-json.image_url @recipe.image_url
-json.created_at @recipe.created_at
-json.current_user current_user
+json.partial! "recipe.json.jbuilder", recipe: @recipe
 
 json.formatted do
 	json.created_at @recipe.friendly_created_at
@@ -13,3 +6,8 @@ json.formatted do
 	json.ingredients @recipe.ingredients_array
 	json.directions @recipe.directions_array
 end
+
+json.user do
+	json.partial! @recipe.user, partial: "api/users/user", as: :user
+end
+

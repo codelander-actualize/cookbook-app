@@ -17,10 +17,14 @@ class Api::RecipesController < ApplicationController
 			ingredients: params["ingredients"],
 			directions: params["directions"],
 			prep_time: params["prep_time"],
-			user_id: current_user.id
+			image_url: params["image_url"],
+			user_id: params["user_id"]
 		)
-		@recipe.save
-		render 'show.json.jbuilder'
+		if @recipe.save
+			render 'show.json.jbuilder'
+		else
+			render json: {errors: @recipe.errors.full_messages}, status: :unprocessable_entity
+		end
 	end
 
 	def update
@@ -31,9 +35,13 @@ class Api::RecipesController < ApplicationController
 		@recipe.ingredients = params["ingredients"] || @recipe.ingredients
 		@recipe.directions = params["directions"] || @recipe.directions
 		@recipe.prep_time = params["prep_time"] || @recipe.prep_time
+		@recipe.image_url = params["image_url"] || @recipe.image_url
 
-		@recipe.save
-		render 'show.json.jbuilder'
+		if @recipe.save
+			render 'show.json.jbuilder'
+		else
+			render json: {errors: @recipe.errors.full_messages}, status: :unprocessable_entity
+		end
 	end
 
 	def destroy
