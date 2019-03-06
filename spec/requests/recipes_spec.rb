@@ -26,4 +26,18 @@ RSpec.describe "Recipes API", type: :request do
     end
   end
 
+  describe "POST /api/recipes" do
+    it "create a new recipe" do
+      user = User.create(name: "Bob", email: "bobert@gmail.com", password: "password")
+      post "/api/recipes", params: {title: "Unicorn meat", ingredients: "fresh unicorn, sugar", directions: "make", prep_time: 60, user_id: user.id}
+      recipe = JSON.parse(response.body)
+      expect(recipe["title"]).to eq("Unicorn meat")
+    end
+
+    it "should return an error status code with invalid data" do
+      post "/api/recipes", params: {}
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
+
 end
